@@ -12,6 +12,7 @@ try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
   fs.writeFileSync(".env", "some text", { encoding: "utf-8" });
+  console.log(fs.statSync('.env'))
 } catch (error) {
   core.setFailed(error.message);
 }
