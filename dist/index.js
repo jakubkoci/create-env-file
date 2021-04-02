@@ -2,36 +2,37 @@ module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 991:
+/***/ 622:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const core = __nccwpck_require__(427);
+const core = __nccwpck_require__(957);
 const fs = __nccwpck_require__(747);
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput("who-to-greet");
-  console.log(`Hello ${nameToGreet}!`);
+function main() {
+  try {
+    const envKeys = core.getInput("variables", { required: true });
+    const envFileContent = createEnvFileContent(envKeys, process.env);
+    fs.writeFileSync(".env", envFileContent, { encoding: "utf-8" });
+    fs.accessSync(".env");
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+}
 
-  console.log("process.env", process.env);
-  const inputVariables = core.getInput("variables");
-
-  const variables = inputVariables
+function createEnvFileContent(envKeys, env) {
+  return envKeys
     .split(",")
     .map((v) => v.trim())
-    .map((v) => `${v}=${process.env[v]}`)
+    .map((v) => `${v}=${env[v]}`)
     .join("\n");
-
-  fs.writeFileSync(".env", variables, { encoding: "utf-8" });
-  console.log(fs.statSync(".env"));
-} catch (error) {
-  core.setFailed(error.message);
 }
+
+main();
 
 
 /***/ }),
 
-/***/ 0:
+/***/ 256:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -45,7 +46,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(121);
+const utils_1 = __nccwpck_require__(836);
 /**
  * Commands
  *
@@ -117,7 +118,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 427:
+/***/ 957:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -139,11 +140,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const command_1 = __nccwpck_require__(0);
-const file_command_1 = __nccwpck_require__(891);
-const utils_1 = __nccwpck_require__(121);
+const command_1 = __nccwpck_require__(256);
+const file_command_1 = __nccwpck_require__(450);
+const utils_1 = __nccwpck_require__(836);
 const os = __importStar(__nccwpck_require__(87));
-const path = __importStar(__nccwpck_require__(622));
+const path = __importStar(__nccwpck_require__(277));
 /**
  * The code to exit an action
  */
@@ -362,7 +363,7 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 891:
+/***/ 450:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -380,7 +381,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(747));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(121);
+const utils_1 = __nccwpck_require__(836);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -398,7 +399,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 121:
+/***/ 836:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -440,7 +441,7 @@ module.exports = require("os");;
 
 /***/ }),
 
-/***/ 622:
+/***/ 277:
 /***/ ((module) => {
 
 "use strict";
@@ -486,6 +487,6 @@ module.exports = require("path");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(991);
+/******/ 	return __nccwpck_require__(622);
 /******/ })()
 ;
