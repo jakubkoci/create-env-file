@@ -16,7 +16,7 @@ No outputs
 
 ```yml
 - name: Create env file
-  uses: jakubkoci/create-env-file@v1.1
+  uses: jakubkoci/create-env-file@v1
   with:
     variables: 'API_URL, API_TOKEN'
 ```
