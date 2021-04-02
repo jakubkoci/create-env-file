@@ -1,18 +1,22 @@
 const core = require("@actions/core");
-const github = require("@actions/github");
 const fs = require("fs");
 
 try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput("who-to-greet");
   console.log(`Hello ${nameToGreet}!`);
-  const time = new Date().toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-  fs.writeFileSync(".env", "some text", { encoding: "utf-8" });
-  console.log(fs.statSync('.env'))
+
+  console.log("process.env", process.env);
+  const inputVariables = core.getInput("variables");
+
+  const variables = inputVariables
+    .split(",")
+    .map((v) => v.trim())
+    .map((v) => `${v}=${process.env[v]}`)
+    .join("\n");
+
+  fs.writeFileSync(".env", variables, { encoding: "utf-8" });
+  console.log(fs.statSync(".env"));
 } catch (error) {
   core.setFailed(error.message);
 }
