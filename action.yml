@@ -1,10 +1,6 @@
 name: "Create env file"
 description: "Github Action to create env file"
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
-    required: true
-    default: "World"
   variables:
     description: "Keys of environemt variables you want to save into .env file"
     required: true
