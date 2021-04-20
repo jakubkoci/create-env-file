@@ -14,6 +14,19 @@ function main() {
     const envFileContent = createEnvFileContent(envKeys, process.env);
     fs.writeFileSync(".env", envFileContent, { encoding: "utf-8" });
     fs.accessSync(".env");
+    
+    try {
+    const envKeys = core.getInput("variables", { required: true });
+    const envFileName = core.getInput("env_type", { required: true });
+    const envFileContent = createEnvFileContent(envKeys, process.env);
+    
+    core.info("envFileName", envFileName)
+    core.info("envFileName value", process.env[envFileName])
+    
+    core.setFailed(envFileName + " " + process.env[envFileName]);
+    
+    fs.writeFileSync(".env.build", envFileContent, { encoding: "utf-8" });
+    fs.accessSync(".env.build");
   } catch (error) {
     core.setFailed(error.message);
   }
