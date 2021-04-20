@@ -4,9 +4,10 @@ const fs = require("fs");
 function main() {
   try {
     const envKeys = core.getInput("variables", { required: true });
+    const envFileName = core.getInput("env_type", { required: true });
     const envFileContent = createEnvFileContent(envKeys, process.env);
-    fs.writeFileSync(".env", envFileContent, { encoding: "utf-8" });
-    fs.accessSync(".env");
+    fs.writeFileSync(process.env[envFileName], envFileContent, { encoding: "utf-8" });
+    fs.accessSync(process.env[envFileName]);
   } catch (error) {
     core.setFailed(error.message);
   }
