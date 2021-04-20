@@ -10,8 +10,8 @@ function main() {
     core.info("envFileName", envFileName)
     core.info("envFileName value", process.env[envFileName])
     
-    fs.writeFileSync(process.env.ENV_TYPE, envFileContent, { encoding: "utf-8" });
-    fs.accessSync(process.env.ENV_TYPE);
+    fs.writeFileSync(".env.build", envFileContent, { encoding: "utf-8" });
+    fs.accessSync(".env.build");
   } catch (error) {
     core.setFailed(error.message);
   }
