@@ -11,12 +11,6 @@ const fs = __nccwpck_require__(747);
 function main() {
   try {
     const envKeys = core.getInput("variables", { required: true });
-    const envFileContent = createEnvFileContent(envKeys, process.env);
-    fs.writeFileSync(".env", envFileContent, { encoding: "utf-8" });
-    fs.accessSync(".env");
-    
-    try {
-    const envKeys = core.getInput("variables", { required: true });
     const envFileName = core.getInput("env_type", { required: true });
     const envFileContent = createEnvFileContent(envKeys, process.env);
     
