@@ -6,6 +6,10 @@ function main() {
     const envKeys = core.getInput("variables", { required: true });
     const envFileName = core.getInput("env_type", { required: true });
     const envFileContent = createEnvFileContent(envKeys, process.env);
+    
+    console.log("envFileName", envFileName)
+    console.log("envFileName value", process.env[envFileName])
+    
     fs.writeFileSync(process.env[envFileName], envFileContent, { encoding: "utf-8" });
     fs.accessSync(process.env[envFileName]);
   } catch (error) {
