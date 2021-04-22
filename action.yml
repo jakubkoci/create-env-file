@@ -4,7 +4,7 @@ inputs:
   variables:
     description: "Keys of environemt variables you want to save into .env or .env.build file"
     required: true
-  env_type:
+  env_filename:
     description: "Specify if you want to create .env or .env.build file"
     required: true
 runs:
