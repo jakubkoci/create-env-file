@@ -11,9 +11,11 @@ const fs = __nccwpck_require__(747);
 function main() {
   try {
     const envKeys = core.getInput("variables", { required: true });
+    const envFileName = core.getInput("env_filename", { required: true });
     const envFileContent = createEnvFileContent(envKeys, process.env);
-    fs.writeFileSync(".env", envFileContent, { encoding: "utf-8" });
-    fs.accessSync(".env");
+    
+    fs.writeFileSync(envFileName, envFileContent, { encoding: "utf-8" });
+    fs.accessSync(envFileName);
   } catch (error) {
     core.setFailed(error.message);
   }
